@@ -22,13 +22,8 @@ export default function HabitChart({ habit }) {
 
   // Convert ["1", "2", "4"] => ["Monday", "Tuesday", "Thursday"]
   const frequency = Array.isArray(habit.frequency)
-    ? habit.frequency
-        .map((val) => {
-          const index = parseInt(val);
-          return validDays[index] || null;
-        })
-        .filter(Boolean)
-    : [];
+  ? habit.frequency.filter(day => validDays.includes(day))
+  : [];
 
   const getWeekStart = (date) => {
     const d = new Date(date);
@@ -81,10 +76,10 @@ export default function HabitChart({ habit }) {
         case 'daily':
           include = true;
           break;
-        case 'weekday':
+        case 'weekdays':
           include = !['Saturday', 'Sunday'].includes(dayName);
           break;
-        case 'weekend':
+        case 'weekends':
           include = ['Saturday', 'Sunday'].includes(dayName);
           break;
         case 'custom':
